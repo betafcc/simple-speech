@@ -64,7 +64,7 @@ class Recognition {
       'start',
     ].reduce(
       (acc, next) => (
-        acc.addEventListener(next, (e) =>
+        acc.addEventListener(next, e =>
           subscriber.next(
             toSpeechEvent(Object.assign(e, { tag: next }) as TaggedEvent)
           )
@@ -110,7 +110,7 @@ const toSpeechEvent = (e: TaggedEvent): SpeechEvent =>
   e.tag === 'result'
     ? {
         tag: e.results[e.resultIndex].isFinal ? 'final' : 'interim',
-        alternatives: Array.from(e.results[e.resultIndex]).map((a) => ({
+        alternatives: Array.from(e.results[e.resultIndex]).map(a => ({
           transcript: a.transcript,
           confidence: a.confidence,
         })),
