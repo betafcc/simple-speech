@@ -19,7 +19,6 @@
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -46,7 +45,10 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
+    "@types/dom-speech-recognition": "^0.0.1",
     "husky": "^8.0.2",
+    "prettier-plugin-jsdoc": "^0.4.2",
+    "rx": "^4.1.0",
     "size-limit": "^8.1.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.1",
