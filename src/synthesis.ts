@@ -55,9 +55,7 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
   resetVoice = () => new Synthesis(this.options, Synthesis.getAllVoices)
 
   use = <U extends Partial<V>>(config: Partial<BaseOptions> & U) => {
-    const voiceOptions = voiceKeys
-      .filter(k => k in config)
-      .map(k => [k, config[k]])
+    const voiceOptions = voiceKeys.filter(k => k in config).map(k => [k, config[k]])
 
     return new Synthesis<Extract<V, U>>(
       {
@@ -101,11 +99,9 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
       options: Partial<Exclude<BaseOptions, 'text'> & U>
     ): Promise<void>
   } = (...args: any[]) => {
-    if (args.length === 2)
-      return this.use({ ...args[1], text: args[0] }).speak()
+    if (args.length === 2) return this.use({ ...args[1], text: args[0] }).speak()
     else if (args.length === 1) {
-      if (typeof args[0] === 'string')
-        return this.use<{}>({ text: args[0] }).speak()
+      if (typeof args[0] === 'string') return this.use<{}>({ text: args[0] }).speak()
       else return this.use(args[0]).speak()
     } else
       return new Promise<void>(async (resolve, reject) =>
@@ -123,15 +119,11 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
   }
 }
 
-const synthesis = new Synthesis(
-  { volume: 1, rate: 1, pitch: 1, text: '' },
-  Synthesis.getAllVoices
-)
+const synthesis = new Synthesis({ volume: 1, rate: 1, pitch: 1, text: '' }, Synthesis.getAllVoices)
 
 const speak = synthesis.speak
 
-const clamp = (min: number, max: number) => (v: number) =>
-  Math.min(Math.max(v, min), max)
+const clamp = (min: number, max: number) => (v: number) => Math.min(Math.max(v, min), max)
 
 /**
  * The snippet I use to generate the typings for the voices.
@@ -160,9 +152,7 @@ const getVoicesTypeString = () => {
     )
   )
 
-  return `type ${browser}Voice = ${voices
-    .map(v => JSON.stringify(v))
-    .join('|')}`
+  return `type ${browser}Voice = ${voices.map(v => JSON.stringify(v)).join('|')}`
 }
 
 const _voiceKeys: {

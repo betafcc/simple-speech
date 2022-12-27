@@ -30,7 +30,8 @@
     "semi": false,
     "singleQuote": true,
     "arrowParens": "avoid",
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "endOfLine": "auto"
   },
   "name": "simple-speech",
   "author": "betafcc",
@@ -59,5 +60,8 @@
     "tslib": "^2.4.1",
     "typescript": "^4.9.4",
     "typescript-bundle": "^1.0.18"
+  },
+  "volta": {
+    "node": "16.19.0"
   }
 }

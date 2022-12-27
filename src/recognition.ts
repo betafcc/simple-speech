@@ -28,8 +28,7 @@ type Lang = typeof langs[number]
 class Recognition {
   constructor(readonly options: Options) {}
 
-  use = (options: Partial<Options>) =>
-    new Recognition({ ...this.options, ...options })
+  use = (options: Partial<Options>) => new Recognition({ ...this.options, ...options })
 
   listen = () =>
     new Promise<string>((resolve, reject) =>
@@ -62,17 +61,12 @@ class Recognition {
       'speechend',
       'speechstart',
       'start',
-    ].reduce(
-      (acc, next) => (
-        acc.addEventListener(next, e =>
-          subscriber.next(
-            toSpeechEvent(Object.assign(e, { tag: next }) as TaggedEvent)
-          )
-        ),
-        acc
-      ),
-      Object.assign(new webkitSpeechRecognition(), this.options)
-    )
+    ].reduce((acc, next) => {
+      acc.addEventListener(next, e =>
+        subscriber.next(toSpeechEvent(Object.assign(e, { tag: next }) as TaggedEvent))
+      )
+      return acc
+    }, Object.assign(new webkitSpeechRecognition(), this.options))
 
     recognition.addEventListener('end', () => subscriber.complete())
     recognition.start()

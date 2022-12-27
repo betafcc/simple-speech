@@ -13,5 +13,4 @@ export interface Observable<T> {
   subscribe(observer: ObservableObserver<T>): ObservableSubscription
 }
 
-export const observableSymbol = (): symbol | string =>
-  (Symbol as any).observable || '@@observable'
+export const observableSymbol = (): symbol | string => (Symbol as any).observable || '@@observable'
