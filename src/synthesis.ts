@@ -49,8 +49,6 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
 
   constructor(
     readonly options: BaseOptions,
-    // this need to be a function so that it's lazily evaluated when window.speechSynthesis is ready
-    // FIXME: it's still failing on the first call, why? (at least on solidjs project, check with others)
     readonly getVoices: () => Promise<SpeechSynthesisVoice[]>
   ) {}
 
@@ -75,9 +73,9 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
 
         if (voices.length === 0)
           throw new Error(
-            `No voices found with the following options: ${JSON.stringify(
-              voiceOptions
-            )}`
+            `No voices found with the following options: '${JSON.stringify(
+              Object.fromEntries(voiceOptions)
+            )}'`
           )
 
         return voices
@@ -193,9 +191,9 @@ type ChromeVoice =
   | {
       browser: 'Chrome'
       lang: 'en-US'
-      name: 'Alex'
+      name: 'Albert'
       localService: true
-      voiceURI: 'Alex'
+      voiceURI: 'Albert'
     }
   | {
       browser: 'Chrome'
@@ -214,9 +212,16 @@ type ChromeVoice =
   | {
       browser: 'Chrome'
       lang: 'fr-CA'
-      name: 'Amelie'
+      name: 'Amélie'
       localService: true
-      voiceURI: 'Amelie'
+      voiceURI: 'Amélie'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'ms-MY'
+      name: 'Amira'
+      localService: true
+      voiceURI: 'Amira'
     }
   | {
       browser: 'Chrome'
@@ -227,10 +232,52 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Bad News'
+      localService: true
+      voiceURI: 'Bad News'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Bahh'
+      localService: true
+      voiceURI: 'Bahh'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Bells'
+      localService: true
+      voiceURI: 'Bells'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Boing'
+      localService: true
+      voiceURI: 'Boing'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Bubbles'
+      localService: true
+      voiceURI: 'Bubbles'
+    }
+  | {
+      browser: 'Chrome'
       lang: 'he-IL'
       name: 'Carmit'
       localService: true
       voiceURI: 'Carmit'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Cellos'
+      localService: true
+      voiceURI: 'Cellos'
     }
   | {
       browser: 'Chrome'
@@ -241,10 +288,101 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
-      lang: 'es-AR'
-      name: 'Diego'
+      lang: 'en-GB'
+      name: 'Daniel (Enhanced)'
       localService: true
-      voiceURI: 'Diego'
+      voiceURI: 'Daniel (Enhanced)'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'bg-BG'
+      name: 'Daria'
+      localService: true
+      voiceURI: 'Daria'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Wobble'
+      localService: true
+      voiceURI: 'Wobble'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-AR'
+      name: 'Diego (Enhanced)'
+      localService: true
+      voiceURI: 'Diego (Enhanced)'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Eddy (Italian (Italy))'
+      localService: true
+      voiceURI: 'Eddy (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-FR'
+      name: 'Eddy (French (France))'
+      localService: true
+      voiceURI: 'Eddy (French (France))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Eddy (German (Germany))'
+      localService: true
+      voiceURI: 'Eddy (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-CA'
+      name: 'Eddy (French (Canada))'
+      localService: true
+      voiceURI: 'Eddy (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Eddy (English (US))'
+      localService: true
+      voiceURI: 'Eddy (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Eddy (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Eddy (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Eddy (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Eddy (Finnish (Finland))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Eddy (English (UK))'
+      localService: true
+      voiceURI: 'Eddy (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Eddy (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Eddy (Spanish (Spain))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Eddy (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Eddy (Portuguese (Brazil))'
     }
   | {
       browser: 'Chrome'
@@ -255,10 +393,73 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
-      lang: 'en'
-      name: 'Fiona'
+      lang: 'fr-FR'
+      name: 'Flo (French (France))'
       localService: true
-      voiceURI: 'Fiona'
+      voiceURI: 'Flo (French (France))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Flo (English (US))'
+      localService: true
+      voiceURI: 'Flo (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Flo (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Flo (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Flo (English (UK))'
+      localService: true
+      voiceURI: 'Flo (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Flo (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Flo (Spanish (Spain))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Flo (Italian (Italy))'
+      localService: true
+      voiceURI: 'Flo (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-CA'
+      name: 'Flo (French (Canada))'
+      localService: true
+      voiceURI: 'Flo (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Flo (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Flo (Portuguese (Brazil))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Flo (German (Germany))'
+      localService: true
+      voiceURI: 'Flo (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Flo (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Flo (Finnish (Finland))'
     }
   | {
       browser: 'Chrome'
@@ -269,10 +470,171 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Good News'
+      localService: true
+      voiceURI: 'Good News'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-FR'
+      name: 'Grandma (French (France))'
+      localService: true
+      voiceURI: 'Grandma (French (France))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-CA'
+      name: 'Grandma (French (Canada))'
+      localService: true
+      voiceURI: 'Grandma (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Grandma (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Grandma (Finnish (Finland))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Grandma (German (Germany))'
+      localService: true
+      voiceURI: 'Grandma (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Grandma (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Grandma (Portuguese (Brazil))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Grandma (English (US))'
+      localService: true
+      voiceURI: 'Grandma (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Grandma (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Grandma (Spanish (Spain))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Grandma (English (UK))'
+      localService: true
+      voiceURI: 'Grandma (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Grandma (Italian (Italy))'
+      localService: true
+      voiceURI: 'Grandma (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Grandma (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Grandma (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-FR'
+      name: 'Grandpa (French (France))'
+      localService: true
+      voiceURI: 'Grandpa (French (France))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-CA'
+      name: 'Grandpa (French (Canada))'
+      localService: true
+      voiceURI: 'Grandpa (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Grandpa (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Grandpa (Finnish (Finland))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Grandpa (German (Germany))'
+      localService: true
+      voiceURI: 'Grandpa (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Grandpa (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Grandpa (Portuguese (Brazil))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Grandpa (English (US))'
+      localService: true
+      voiceURI: 'Grandpa (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Grandpa (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Grandpa (Spanish (Spain))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Grandpa (English (UK))'
+      localService: true
+      voiceURI: 'Grandpa (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Grandpa (Italian (Italy))'
+      localService: true
+      voiceURI: 'Grandpa (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Grandpa (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Grandpa (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Jester'
+      localService: true
+      voiceURI: 'Jester'
+    }
+  | {
+      browser: 'Chrome'
       lang: 'ro-RO'
       name: 'Ioana'
       localService: true
       voiceURI: 'Ioana'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-FR'
+      name: 'Jacques'
+      localService: true
+      voiceURI: 'Jacques'
     }
   | {
       browser: 'Chrome'
@@ -283,17 +645,10 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
-      lang: 'es-ES'
-      name: 'Jorge'
+      lang: 'en-US'
+      name: 'Junior'
       localService: true
-      voiceURI: 'Jorge'
-    }
-  | {
-      browser: 'Chrome'
-      lang: 'es-MX'
-      name: 'Juan'
-      localService: true
-      voiceURI: 'Juan'
+      voiceURI: 'Junior'
     }
   | {
       browser: 'Chrome'
@@ -311,10 +666,24 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Kathy'
+      localService: true
+      voiceURI: 'Kathy'
+    }
+  | {
+      browser: 'Chrome'
       lang: 'ja-JP'
       name: 'Kyoko'
       localService: true
       voiceURI: 'Kyoko'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'hr-HR'
+      name: 'Lana'
+      localService: true
+      voiceURI: 'Lana'
     }
   | {
       browser: 'Chrome'
@@ -332,10 +701,17 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
-      lang: 'it-IT'
-      name: 'Luca'
+      lang: 'uk-UA'
+      name: 'Lesya'
       localService: true
-      voiceURI: 'Luca'
+      voiceURI: 'Lesya'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'vi-VN'
+      name: 'Linh'
+      localService: true
+      voiceURI: 'Linh'
     }
   | {
       browser: 'Chrome'
@@ -346,24 +722,31 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
-      lang: 'ar-SA'
-      name: 'Maged'
+      lang: 'pt-BR'
+      name: 'Luciana (Enhanced)'
       localService: true
-      voiceURI: 'Maged'
+      voiceURI: 'Luciana (Enhanced)'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'ar-001'
+      name: 'Majed'
+      localService: true
+      voiceURI: 'Majed'
     }
   | {
       browser: 'Chrome'
       lang: 'hu-HU'
-      name: 'Mariska'
+      name: 'Tünde'
       localService: true
-      voiceURI: 'Mariska'
+      voiceURI: 'Tünde'
     }
   | {
       browser: 'Chrome'
       lang: 'zh-TW'
-      name: 'Mei-Jia'
+      name: 'Meijia'
       localService: true
-      voiceURI: 'Mei-Jia'
+      voiceURI: 'Meijia'
     }
   | {
       browser: 'Chrome'
@@ -389,9 +772,16 @@ type ChromeVoice =
   | {
       browser: 'Chrome'
       lang: 'es-ES'
-      name: 'Monica'
+      name: 'Mónica'
       localService: true
-      voiceURI: 'Monica'
+      voiceURI: 'Mónica'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'ca-ES'
+      name: 'Montse'
+      localService: true
+      voiceURI: 'Montse'
     }
   | {
       browser: 'Chrome'
@@ -402,10 +792,94 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Organ'
+      localService: true
+      voiceURI: 'Organ'
+    }
+  | {
+      browser: 'Chrome'
       lang: 'es-MX'
       name: 'Paulina'
       localService: true
       voiceURI: 'Paulina'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Superstar'
+      localService: true
+      voiceURI: 'Superstar'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Ralph'
+      localService: true
+      voiceURI: 'Ralph'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Reed (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Reed (Portuguese (Brazil))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Reed (Italian (Italy))'
+      localService: true
+      voiceURI: 'Reed (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Reed (German (Germany))'
+      localService: true
+      voiceURI: 'Reed (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Reed (English (US))'
+      localService: true
+      voiceURI: 'Reed (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-CA'
+      name: 'Reed (French (Canada))'
+      localService: true
+      voiceURI: 'Reed (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Reed (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Reed (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Reed (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Reed (Finnish (Finland))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Reed (English (UK))'
+      localService: true
+      voiceURI: 'Reed (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Reed (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Reed (Spanish (Spain))'
     }
   | {
       browser: 'Chrome'
@@ -416,10 +890,150 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Rocko (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Rocko (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-FR'
+      name: 'Rocko (French (France))'
+      localService: true
+      voiceURI: 'Rocko (French (France))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-CA'
+      name: 'Rocko (French (Canada))'
+      localService: true
+      voiceURI: 'Rocko (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Rocko (English (US))'
+      localService: true
+      voiceURI: 'Rocko (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Rocko (English (UK))'
+      localService: true
+      voiceURI: 'Rocko (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Rocko (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Rocko (Portuguese (Brazil))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Rocko (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Rocko (Spanish (Spain))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Rocko (German (Germany))'
+      localService: true
+      voiceURI: 'Rocko (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Rocko (Italian (Italy))'
+      localService: true
+      voiceURI: 'Rocko (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Rocko (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Rocko (Finnish (Finland))'
+    }
+  | {
+      browser: 'Chrome'
       lang: 'en-US'
       name: 'Samantha'
       localService: true
       voiceURI: 'Samantha'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Sandy (German (Germany))'
+      localService: true
+      voiceURI: 'Sandy (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-FR'
+      name: 'Sandy (French (France))'
+      localService: true
+      voiceURI: 'Sandy (French (France))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Sandy (Italian (Italy))'
+      localService: true
+      voiceURI: 'Sandy (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Sandy (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Sandy (Finnish (Finland))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Sandy (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Sandy (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Sandy (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Sandy (Spanish (Spain))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-CA'
+      name: 'Sandy (French (Canada))'
+      localService: true
+      voiceURI: 'Sandy (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Sandy (English (US))'
+      localService: true
+      voiceURI: 'Sandy (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Sandy (English (UK))'
+      localService: true
+      voiceURI: 'Sandy (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Sandy (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Sandy (Portuguese (Brazil))'
     }
   | {
       browser: 'Chrome'
@@ -437,10 +1051,80 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
-      lang: 'zh-HK'
-      name: 'Sin-ji'
+      lang: 'fr-CA'
+      name: 'Shelley (French (Canada))'
       localService: true
-      voiceURI: 'Sin-ji'
+      voiceURI: 'Shelley (French (Canada))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fi-FI'
+      name: 'Shelley (Finnish (Finland))'
+      localService: true
+      voiceURI: 'Shelley (Finnish (Finland))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'de-DE'
+      name: 'Shelley (German (Germany))'
+      localService: true
+      voiceURI: 'Shelley (German (Germany))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'pt-BR'
+      name: 'Shelley (Portuguese (Brazil))'
+      localService: true
+      voiceURI: 'Shelley (Portuguese (Brazil))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Shelley (English (US))'
+      localService: true
+      voiceURI: 'Shelley (English (US))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-ES'
+      name: 'Shelley (Spanish (Spain))'
+      localService: true
+      voiceURI: 'Shelley (Spanish (Spain))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-GB'
+      name: 'Shelley (English (UK))'
+      localService: true
+      voiceURI: 'Shelley (English (UK))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'it-IT'
+      name: 'Shelley (Italian (Italy))'
+      localService: true
+      voiceURI: 'Shelley (Italian (Italy))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'es-MX'
+      name: 'Shelley (Spanish (Mexico))'
+      localService: true
+      voiceURI: 'Shelley (Spanish (Mexico))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'fr-FR'
+      name: 'Shelley (French (France))'
+      localService: true
+      voiceURI: 'Shelley (French (France))'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'zh-HK'
+      name: 'Sinji'
+      localService: true
+      voiceURI: 'Sinji'
     }
   | {
       browser: 'Chrome'
@@ -459,23 +1143,23 @@ type ChromeVoice =
   | {
       browser: 'Chrome'
       lang: 'zh-CN'
-      name: 'Ting-Ting'
+      name: 'Tingting'
       localService: true
-      voiceURI: 'Ting-Ting'
-    }
-  | {
-      browser: 'Chrome'
-      lang: 'en-IN'
-      name: 'Veena'
-      localService: true
-      voiceURI: 'Veena'
+      voiceURI: 'Tingting'
     }
   | {
       browser: 'Chrome'
       lang: 'en-US'
-      name: 'Victoria'
+      name: 'Trinoids'
       localService: true
-      voiceURI: 'Victoria'
+      voiceURI: 'Trinoids'
+    }
+  | {
+      browser: 'Chrome'
+      lang: 'en-US'
+      name: 'Whisper'
+      localService: true
+      voiceURI: 'Whisper'
     }
   | {
       browser: 'Chrome'
@@ -500,10 +1184,10 @@ type ChromeVoice =
     }
   | {
       browser: 'Chrome'
-      lang: 'ru-RU'
-      name: 'Yuri'
+      lang: 'en-US'
+      name: 'Zarvox'
       localService: true
-      voiceURI: 'Yuri'
+      voiceURI: 'Zarvox'
     }
   | {
       browser: 'Chrome'
