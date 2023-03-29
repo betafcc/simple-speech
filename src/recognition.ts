@@ -1,6 +1,3 @@
-export type { Recognition, SpeechEvent, Options, Lang }
-export { recognition }
-
 export interface Observer<T> {
   closed?: boolean
   next: (value: T) => void
@@ -15,20 +12,20 @@ export interface Unsubscribable {
 // @ts-ignore
 Symbol.observable = Symbol.observable || '@@observable'
 
-type Options = {
+export type RecognitionOptions = {
   // grammars: SpeechGrammarList
-  lang: Lang
+  lang: RecognitionLang
   continuous: boolean
   interimResults: boolean
   maxAlternatives: number
 }
 
-type Lang = typeof langs[number]
+export type RecognitionLang = typeof langs[number]
 
-class Recognition {
-  constructor(readonly options: Options) {}
+export class Recognition {
+  constructor(readonly options: RecognitionOptions) {}
 
-  use = (options: Partial<Options>) => new Recognition({ ...this.options, ...options })
+  use = (options: Partial<RecognitionOptions>) => new Recognition({ ...this.options, ...options })
 
   listen = () =>
     new Promise<string>((resolve, reject) =>
@@ -42,7 +39,7 @@ class Recognition {
       }).start()
     )
 
-  subscribe = (observer: Partial<Observer<SpeechEvent>>): Unsubscribable => {
+  subscribe = (observer: Partial<Observer<RecognitionEvent>>): Unsubscribable => {
     const subscriber = {
       next: (observer.next ?? (() => {})).bind(observer),
       error: (observer.error ?? (() => {})).bind(observer),
@@ -63,7 +60,7 @@ class Recognition {
       'start',
     ].reduce((acc, next) => {
       acc.addEventListener(next, e =>
-        subscriber.next(toSpeechEvent(Object.assign(e, { tag: next }) as TaggedEvent))
+        subscriber.next(toRecognitionEvent(Object.assign(e, { tag: next }) as TaggedEvent))
       )
       return acc
     }, Object.assign(new webkitSpeechRecognition(), this.options))
@@ -80,7 +77,7 @@ class Recognition {
   [Symbol.observable] = () => this
 }
 
-const recognition = new Recognition({
+export const recognition = new Recognition({
   lang: 'en-US',
   continuous: false,
   interimResults: false,
@@ -93,14 +90,14 @@ type TaggedEvent = {
   } & SpeechRecognitionEventMap[K]
 }[keyof SpeechRecognitionEventMap]
 
-type SpeechEvent =
+export type RecognitionEvent =
   | {
       tag: 'interim' | 'final'
       alternatives: Array<{ transcript: string; confidence: number }>
     }
   | Exclude<TaggedEvent, { tag: 'result' }>
 
-const toSpeechEvent = (e: TaggedEvent): SpeechEvent =>
+const toRecognitionEvent = (e: TaggedEvent): RecognitionEvent =>
   e.tag === 'result'
     ? {
         tag: e.results[e.resultIndex].isFinal ? 'final' : 'interim',

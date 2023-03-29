@@ -1,7 +1,4 @@
-export type { Synthesis, Voice, BrowserVoice, BaseOptions }
-export { synthesis, speak, getVoicesTypeString }
-
-type BaseOptions = {
+export type SynthesisOptions = {
   /** The text to be spoken. */
   text: string
 
@@ -35,7 +32,7 @@ type BaseOptions = {
  * 1. Enables point-free style
  * 2. Enables better type inference to give you autocomplete
  */
-class Synthesis<V extends BrowserVoice = BrowserVoice> {
+export class Synthesis<V extends BrowserVoice = BrowserVoice> {
   static getAllVoices = () =>
     new Promise<Array<SpeechSynthesisVoice>>(resolve => {
       const voices = speechSynthesis.getVoices()
@@ -48,13 +45,13 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
     })
 
   constructor(
-    readonly options: BaseOptions,
+    readonly options: SynthesisOptions,
     readonly getVoices: () => Promise<SpeechSynthesisVoice[]>
   ) {}
 
   resetVoice = () => new Synthesis(this.options, Synthesis.getAllVoices)
 
-  use = <U extends Partial<V>>(config: Partial<BaseOptions> & U) => {
+  use = <U extends Partial<V>>(config: Partial<SynthesisOptions> & U) => {
     const voiceOptions = voiceKeys.filter(k => k in config).map(k => [k, config[k]])
 
     return new Synthesis<Extract<V, U>>(
@@ -92,11 +89,11 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
 
   speak: {
     (): Promise<void>
-    <U extends Partial<V>>(options: Partial<BaseOptions> & U): Promise<void>
+    <U extends Partial<V>>(options: Partial<SynthesisOptions> & U): Promise<void>
     (text: string): Promise<void>
     <U extends Partial<V>>(
       text: string,
-      options: Partial<Exclude<BaseOptions, 'text'> & U>
+      options: Partial<Exclude<SynthesisOptions, 'text'> & U>
     ): Promise<void>
   } = (...args: any[]) => {
     if (args.length === 2) return this.use({ ...args[1], text: args[0] }).speak()
@@ -119,9 +116,12 @@ class Synthesis<V extends BrowserVoice = BrowserVoice> {
   }
 }
 
-const synthesis = new Synthesis({ volume: 1, rate: 1, pitch: 1, text: '' }, Synthesis.getAllVoices)
+export const synthesis = new Synthesis(
+  { volume: 1, rate: 1, pitch: 1, text: '' },
+  Synthesis.getAllVoices
+)
 
-const speak = synthesis.speak
+export const speak = synthesis.speak
 
 const clamp = (min: number, max: number) => (v: number) => Math.min(Math.max(v, min), max)
 
@@ -130,7 +130,7 @@ const clamp = (min: number, max: number) => (v: number) => Math.min(Math.max(v, 
  *
  * Just copy and run `copy(getVoicesTypeString())` on the browser console.
  */
-const getVoicesTypeString = () => {
+export const getVoicesTypeString = () => {
   const browser = (agent => {
     if (agent.indexOf('edge') > -1) return 'MSEdge'
     if (agent.indexOf('edg/') > -1) return 'ChromiumEdge'
@@ -156,19 +156,19 @@ const getVoicesTypeString = () => {
 }
 
 const _voiceKeys: {
-  [key in keyof Voice]: null
+  [key in keyof SynthesisVoice]: null
 } = { lang: null, localService: null, name: null, voiceURI: null }
 
-const voiceKeys = Object.keys(_voiceKeys) as (keyof Voice)[]
+const voiceKeys = Object.keys(_voiceKeys) as (keyof SynthesisVoice)[]
 
-type Voice = Omit<BrowserVoice, 'browser'>
+export type SynthesisVoice = Omit<BrowserVoice, 'browser'>
 
 /**
  * The possible voices for the browser, typed here so we can get autocomplete.
  *
  * I generated this by using `getVoicesTypeString` on the browser console.
  */
-type BrowserVoice = ChromeVoice | FirefoxVoice | SafariVoice
+export type BrowserVoice = ChromeVoice | FirefoxVoice | SafariVoice
 
 type ChromeVoice =
   | {
