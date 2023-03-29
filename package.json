@@ -38,6 +38,11 @@
   },
   "name": "simple-speech",
   "author": "betafcc",
+  "homepage": "https://github.com/betafcc/simple-speech",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/betafcc/simple-speech.git"
+  },
   "module": "dist/simple-speech.esm.js",
   "size-limit": [
     {

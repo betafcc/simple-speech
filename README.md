@@ -72,7 +72,7 @@ $button.addEventListener('click', onClick)
 
 Selecting voices with some kind of IDE support was an early motivation for this package. Currently, it provides intellisense support for narrowing down the voice choice, eg:
 
-![./voices.gif](./voices.gif)
+![./voices.gif](https://github.com/betafcc/simple-speech/blob/main/voices.gif?raw=true)
 
 On the first `use` call, I narrow the voices choices for only the ones that matches `lang: 'fr-FR'`, so on the next `use` call, the type system has the info to narrow down the `name` options that are available for that language only.
 
