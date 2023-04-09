@@ -1,10 +1,8 @@
 export type {
-  Observer,
   Recognition,
   RecognitionEvent,
   RecognitionLang,
   RecognitionOptions,
-  Unsubscribable,
 } from './recognition'
 export { recognition } from './recognition'
 
