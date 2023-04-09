@@ -1,16 +1,4 @@
-export interface Observer<T> {
-  closed?: boolean
-  next: (value: T) => void
-  error: (err: any) => void
-  complete: () => void
-}
-
-export interface Unsubscribable {
-  unsubscribe(): void
-}
-
-// @ts-ignore
-Symbol.observable = Symbol.observable || '@@observable'
+import { Observer, Subscribable, Unsubscribable } from './util'
 
 export type RecognitionOptions = {
   // grammars: SpeechGrammarList
@@ -22,7 +10,7 @@ export type RecognitionOptions = {
 
 export type RecognitionLang = typeof langs[number]
 
-export class Recognition {
+export class Recognition implements Subscribable<RecognitionEvent> {
   constructor(readonly options: RecognitionOptions) {}
 
   use = (options: Partial<RecognitionOptions>) => new Recognition({ ...this.options, ...options })
@@ -71,10 +59,7 @@ export class Recognition {
     return {
       unsubscribe: () => recognition.stop(),
     }
-  };
-
-  // @ts-ignore
-  [Symbol.observable] = () => this
+  }
 }
 
 export const recognition = new Recognition({
