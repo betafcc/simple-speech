@@ -54,9 +54,11 @@
       "limit": "10 KB"
     }
   ],
+  "dependencies": {
+    "@types/dom-speech-recognition": "^0.0.1"
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
-    "@types/dom-speech-recognition": "^0.0.1",
     "concurrently": "^7.6.0",
     "husky": "^8.0.2",
     "live-server": "^1.2.2",
