@@ -1,4 +1,6 @@
-import { Observer, Subscribable, Unsubscribable } from './util'
+import Symbol_observable from 'symbol-observable'
+
+import { InteropObservable, Observer, Unsubscribable } from './util'
 
 export type RecognitionOptions = {
   // grammars: SpeechGrammarList
@@ -10,7 +12,7 @@ export type RecognitionOptions = {
 
 export type RecognitionLang = typeof langs[number]
 
-export class Recognition implements Subscribable<RecognitionEvent> {
+export class Recognition implements InteropObservable<RecognitionEvent> {
   constructor(readonly options: RecognitionOptions) {}
 
   use = (options: Partial<RecognitionOptions>) => new Recognition({ ...this.options, ...options })
@@ -25,7 +27,11 @@ export class Recognition implements Subscribable<RecognitionEvent> {
         onresult: (e: SpeechRecognitionEventMap['result']) =>
           resolve(e.results[e.resultIndex][0].transcript),
       }).start()
-    )
+    );
+
+  declare [Symbol.observable]: () => this;
+  // @ts-ignore
+  [Symbol_observable] = () => this
 
   subscribe = (observer: Partial<Observer<RecognitionEvent>>): Unsubscribable => {
     const subscriber = {

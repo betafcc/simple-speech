@@ -1,3 +1,7 @@
+export interface InteropObservable<T> {
+  [Symbol.observable]: () => Subscribable<T>
+}
+
 export interface Subscribable<T> {
   subscribe(observer: Partial<Observer<T>>): Unsubscribable
 }

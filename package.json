@@ -55,7 +55,8 @@
     }
   ],
   "dependencies": {
-    "@types/dom-speech-recognition": "^0.0.1"
+    "@types/dom-speech-recognition": "^0.0.1",
+    "symbol-observable": "^4.0.0"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^8.1.0",
